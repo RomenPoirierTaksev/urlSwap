@@ -2,17 +2,18 @@ import pip._vendor.requests as requests
 
 def getAppleMusicURL(name):
 
-    name_list = name.split("&")
-
+    name_list = name.split("%")
+    #print(name_list)
     r = requests.get("https://itunes.apple.com/search?term={name_list[0]}&type=music".format(name_list=name_list))
 
     r = r.json()
-
     for track in r['results']:
         try:
+            #print(track)
             track_name = track['trackName']
             track_artist = track['artistName']
-            if (track_name.title().find(name_list[0].title()) != -1) and (track_artist.title().find(name_list[1].title()) != -1):
+            #print(track_name, track_artist)
+            if (track_name.find(name_list[0].replace("with", "feat.")) != -1) and (track_artist.find(name_list[1]) != -1):
                 return track['trackViewUrl']
         except:
             pass
@@ -28,6 +29,6 @@ def getAppleMusicName(url):
 
     try:
         an = r['artistName'].split('&')
-        return '&'.join([r['trackName'], an[0]])
+        return '%'.join([r['trackName'], an[0]])
     except:
-        return '&'.join([r['trackName'], r['artistName']])
+        return '%'.join([r['trackName'], r['artistName']])

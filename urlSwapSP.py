@@ -30,8 +30,9 @@ BASE_URL = 'https://api.spotify.com/v1/'
 
 def getSpotifyURL(name):
 
-    name_list = name.split("&")
-
+    name_list = name.split("%")
+    name_list[0] = name_list[0].replace("feat.", "with")
+    #print(name_list)
     r = requests.get(BASE_URL + 'search?' + "q={name}&type=track".format(name=name_list[0]), headers=headers)
 
     r = r.json()
@@ -40,9 +41,9 @@ def getSpotifyURL(name):
         try:
             track_name = track['name']
             track_artist = track['artists'][0]['name']
-            #print(track_name, name_list[0].title())
-            #print(track_artist, name_list[1].title())
-            if (track_name.title().find(name_list[0].title()) != -1) and (track_artist.title().find(name_list[1].title()) != -1):
+            print(track_name, name_list[0])
+            print(track_artist, name_list[1])
+            if (track_name.find(name_list[0]) != -1) and (track_artist.find(name_list[1]) != -1):
                 return track['external_urls']['spotify']
         except:
             pass
@@ -51,12 +52,13 @@ def getSpotifyURL(name):
 def getSpotifyName(url):
     
     track_id = url[31:]
-
+    print(track_id)
     r = requests.get(BASE_URL + 'tracks/' + track_id, headers=headers)
 
     r = r.json()
 
-    return '&'.join([r['name'], r['artists'][0]['name']])
+    print('%'.join([r['name'], r['artists'][0]['name']]))
+    return '%'.join([r['name'], r['artists'][0]['name']])
 
 
 
