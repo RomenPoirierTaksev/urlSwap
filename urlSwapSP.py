@@ -31,7 +31,8 @@ BASE_URL = 'https://api.spotify.com/v1/'
 def getSpotifyURL(name):
 
     name_list = name.split("%")
-    name_list[0] = name_list[0].replace("feat.", "with")
+    name_list[0] = name_list[0][0:name_list[0].find("(")]
+    name_list[0] = name_list[0][0:name_list[0].find("-")]
     #print(name_list)
     r = requests.get(BASE_URL + 'search?' + "q={name}&type=track".format(name=name_list[0]), headers=headers)
 
@@ -43,7 +44,7 @@ def getSpotifyURL(name):
             track_artist = track['artists'][0]['name']
             print(track_name, name_list[0])
             print(track_artist, name_list[1])
-            if (track_name.find(name_list[0]) != -1) and (track_artist.find(name_list[1]) != -1):
+            if (track_name.lower().find(name_list[0].lower()) != -1) and (track_artist.lower().find(name_list[1].lower()) != -1):
                 return track['external_urls']['spotify']
         except:
             pass
