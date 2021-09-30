@@ -25,10 +25,14 @@ function doSomething(){
         if(text == 500){
             document.getElementById("output").innerHTML = "Unable to find song";
         }else{
-            document.getElementById("output").innerHTML = "New URL: " + text;
+            if(text == "Invalid URL"){
+                document.getElementById("output").innerHTML = text;
+            }else{
+                document.getElementById("output").innerHTML = "New URL: " + text;
+            }
+            
+            
         }
-        // Should be 'OK' if everything was successful
-        
     });
 }
 
