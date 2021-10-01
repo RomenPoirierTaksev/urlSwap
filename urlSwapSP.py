@@ -31,10 +31,10 @@ BASE_URL = 'https://api.spotify.com/v1/'
 def getSpotifyURL(name):
 
     name_list = name.split("%")
-    name_list[0] = name_list[0].strip()
-    name_list[1] = name_list[1].strip()
     name_list[0] = name_list[0][0:name_list[0].find("(")] if name_list[0].find("(") != -1 else name_list[0]
     name_list[0] = name_list[0][0:name_list[0].find("-")] if name_list[0].find("-") != -1 else name_list[0]
+    name_list[0] = name_list[0].strip()
+    name_list[1] = name_list[1].strip()
     print(name_list)
     r = requests.get(BASE_URL + 'search?' + "q={name}&type=track&limit=50".format(name=name_list[0]), headers=headers)
 

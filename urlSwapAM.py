@@ -3,8 +3,10 @@ import pip._vendor.requests as requests
 def getAppleMusicURL(name):
 
     name_list = name.split("%")
-    name_list[0] = name_list[0][0:name_list[0].find("(")]
-    name_list[0] = name_list[0][0:name_list[0].find("-")]
+    name_list[0] = name_list[0][0:name_list[0].find("(")] if name_list[0].find("(") != -1 else name_list[0]
+    name_list[0] = name_list[0][0:name_list[0].find("-")] if name_list[0].find("-") != -1 else name_list[0]
+    name_list[0] = name_list[0].strip()
+    name_list[1] = name_list[1].strip()
     r = requests.get("https://itunes.apple.com/search?term={name_list[0]}&type=music&entity=song&limit=200".format(name_list=name_list))
     r = r.json()
 

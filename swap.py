@@ -8,4 +8,4 @@ from urlSwapAM import getAppleMusicName,getAppleMusicURL
 
 #To get a Spotify URL from an Apple Music URL
 
-#print(getSpotifyURL(getAppleMusicName("https://music.apple.com/us/album/clash/1575534808?i=1575534955&uo=4")))
+print(getSpotifyURL(getAppleMusicName("https://music.apple.com/us/album/money-trees-feat-jay-rock/1440818890?i=1440818969&uo=4")))
