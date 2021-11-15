@@ -1,8 +1,14 @@
 let button = document.getElementById('go-button');
+var popup = document.getElementById("myPopup");
 
-function doSomething(){
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+function swapUrl(){
     let url = document.getElementById('url').value;
-    fetch('/hello', {
+    popup.classList.toggle("hidden");
+    fetch('/swapUrl', {
 
         // Declare what type of data we're sending
         headers: {
@@ -21,7 +27,7 @@ function doSomething(){
             return response.status;
         }
         return response.text();
-    }).then(function (text) {
+    }).then(async function (text) {
         if(text == 500){
             document.getElementById("output").innerHTML = "Unable to find song";
         }else{
@@ -29,6 +35,17 @@ function doSomething(){
                 document.getElementById("output").innerHTML = text;
             }else{
                 document.getElementById("output").innerHTML = "New URL: " + text;
+                navigator.clipboard.writeText(text).then(function() {
+                    console.log('Async: Copying to clipboard was successful!');
+                  }, function(err) {
+                    console.error('Async: Could not copy text: ', err);
+                  });
+                popup.classList.toggle("show");
+                await sleep(2000);
+                popup.classList.toggle("hideAnimation");
+                await sleep(1000);
+                popup.classList.toggle("hide")
+
             }
             
             
@@ -36,4 +53,4 @@ function doSomething(){
     });
 }
 
-button.addEventListener("click", doSomething);
+button.addEventListener("click", swapUrl);

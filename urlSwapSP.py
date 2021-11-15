@@ -36,7 +36,7 @@ def getSpotifyURL(name):
     name_list[0] = name_list[0].strip()
     name_list[1] = name_list[1].strip()
     print(name_list)
-    r = requests.get(BASE_URL + 'search?' + "q={name}&type=track&limit=50".format(name=name_list[0]), headers=headers)
+    r = requests.get(BASE_URL + 'search?' + "q={trackname}&type=track&limit=50&artist={artist}".format(trackname=name_list[0], artist=name_list[1]), headers=headers)
 
     r = r.json()
 
@@ -44,8 +44,12 @@ def getSpotifyURL(name):
         try:
             track_name = track['name']
             track_artist = track['artists'][0]['name']
+            """
+            print("=======================")
             print(track_name, name_list[0])
             print(track_artist, name_list[1])
+            print("=======================")
+            """
             if (track_name.lower().find(name_list[0].lower()) != -1) and (track_artist.lower().find(name_list[1].lower()) != -1):
                 return track['external_urls']['spotify']
         except:
